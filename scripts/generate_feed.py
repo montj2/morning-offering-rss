@@ -11,7 +11,7 @@ FEED_LINK = f"{BASE_URL}/offering/"
 FEED_DESCRIPTION = "Unofficial, personal-use RSS feed created from morningoffering.com daily page."
 FEED_FILE = "feed.xml"
 MAX_ITEMS = 60
-USER_AGENT = "Personal-RSS-Generator/1.1 (+https://github.com/your-username/morning-offering-rss)"
+USER_AGENT = "Personal-RSS-Generator/1.1 (+https://github.com/montj2/morning-offering-rss)"
 
 def today_et():
     return dt.datetime.now(pytz.timezone(TZ))
