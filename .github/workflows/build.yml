@@ -1,4 +1,4 @@
-name: Build RSS
+name: Build RSS Feed
 
 on:
   schedule:
