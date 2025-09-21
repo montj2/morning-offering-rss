@@ -1,0 +1,41 @@
+name: Build RSS
+
+on:
+  schedule:
+    - cron: "10 10 * * *"  # daily schedule
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "How many days (including today) to fetch"
+        required: false
+        default: "1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (gh-pages for publishing)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt
+
+      - name: Generate feed
+        run: |
+          python scripts/generate_feed.py --days "${{ github.event.inputs.days || 1 }}"
+
+      - name: Commit & push feed
+        run: |
+          git config user.name "rss-bot"
+          git config user.email "rss-bot@users.noreply.github.com"
+          git add feed.xml
+          git commit -m "update feed ($(date -u +'%Y-%m-%dT%H:%M:%SZ')); days=${{ github.event.inputs.days || 1 }}" || echo "No changes"
+          git push origin gh-pages
