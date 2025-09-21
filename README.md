@@ -1,7 +1,7 @@
 # Morning Offering (Unofficial RSS)
 
 This repo builds a personal, unofficial RSS feed from [morningoffering.com](https://www.morningoffering.com).  
-Subscribe after setup: `https://<your-username>.github.io/morning-offering-rss/feed.xml`
+Subscribe after setup: `https://montj2.github.io/morning-offering-rss/feed.xml`
 
 ## Setup
 1. Fork or create this repo.
