@@ -61,10 +61,24 @@ def extract_main_content(html_text, url):
     if daily_saint:
         content_parts.append("<h2>Saint of the Day</h2>")
         
-        # Saint image
-        saint_img = soup.select('.daily-saint > div:nth-child(1) > img:nth-child(1)')
-        if saint_img:
-            content_parts.append(str(saint_img[0]))
+        # Saint image - find the actual saint image, not promotional content
+        saint_imgs = soup.select('.daily-saint img')
+        actual_saint_img = None
+        for img in saint_imgs:
+            src = img.get('src', '')
+            alt = img.get('alt', '').lower()
+            
+            # Look for the real saint image: from saints directory and not promotional
+            if ('saints/' in src and 
+                'podcast' not in alt and 
+                'referral' not in alt and
+                'banner' not in src.lower() and
+                'join our' not in alt):
+                actual_saint_img = img
+                break
+        
+        if actual_saint_img:
+            content_parts.append(str(actual_saint_img))
         
         # Saint text (clean up promotional content)
         saint_text = soup.select('.daily-saint > div:nth-child(2)')
